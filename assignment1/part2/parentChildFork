@@ -1,0 +1,28 @@
+import os
+import time
+import sys
+
+print('Program Started\n\n\n')
+def child():
+   print('\nGreetings! I am a new child',  os.getpid())
+   os._exit(0) 
+
+   
+#Method used to create a delay 
+def term():
+   time.sleep(20)
+   sys.exit()
+
+
+def parent():
+   while True:
+      newpid = os.fork()
+      if newpid == 0:
+         child()
+      else:
+         pids = (os.getpid(), newpid)
+         print("parent: %d, child: %d\n" % pids)
+      term()
+
+
+parent()
